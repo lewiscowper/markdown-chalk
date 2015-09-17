@@ -1,0 +1,32 @@
+{
+  "name": "@lewiscowper/markdown-chalk",
+  "version": "1.0.0",
+  "description": "markdown parser to chalk pretty printing in the terminal",
+  "main": "index.js",
+  "scripts": {
+    "test": "exit 0"
+  },
+  "bin": {
+    "markdown-chalk": "bin/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lewiscowper/markdown-chalk.git"
+  },
+  "keywords": [
+    "markdown",
+    "chalk",
+    "terminal"
+  ],
+  "author": "Lewis Cowper <lewis.cowper@googlemail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lewiscowper/markdown-chalk/issues"
+  },
+  "homepage": "https://github.com/lewiscowper/markdown-chalk#readme",
+  "dependencies": {
+    "chalk": "^1.1.1",
+    "marked": "^0.3.5",
+    "yargs": "^3.25.0"
+  }
+}
