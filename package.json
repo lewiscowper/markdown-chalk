@@ -1,6 +1,6 @@
 {
   "name": "@lewiscowper/markdown-chalk",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "markdown parser to chalk pretty printing in the terminal",
   "main": "index.js",
   "scripts": {
