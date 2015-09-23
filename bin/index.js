@@ -1,9 +1,9 @@
 #! /usr/bin/env node
 
-var marked = require('marked');
-var fs = require('fs');
-var chalk = require('chalk');
-var argv = require('yargs')
+var marked = require('marked'),
+    fs = require('fs'),
+    chalk = require('chalk'),
+    argv = require('yargs')
     .usage('Usage: $0 --input [Markdown File] --lineLength [num]')
     .default({'input': 'README.md', 'lineLength': 70})
     .alias('i', 'input')
@@ -12,9 +12,9 @@ var argv = require('yargs')
     .help('h')
     .alias('h', 'help')
     .demand(['input'])
-    .argv;
+    .argv,
 
-var renderer = new marked.Renderer();
+    renderer = new marked.Renderer();
 marked.setOptions({
   gfm: true,
   tables: true,
