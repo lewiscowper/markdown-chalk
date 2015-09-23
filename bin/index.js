@@ -69,20 +69,22 @@ var inputFileWithNewLines = inputFileArray.join('\n');
 // Block Level Methods
 
 renderer.code = function (code, language) {
-  return code;
+  return chalk.green(code) + '\n\n';
 },
 
 renderer.blockquote = function (quote) {
-  return chalk.bgBlack(quote);
+  return chalk.bgBlack(quote) + '\n';
 },
 
 renderer.html = function (html) {
-  return html;
+  return html + '\n';
 },
 
 renderer.heading = function (text, level) {
-  if (level = 1) {
-    return chalk.bold.underline(text) + '\n\n';
+  if (level == 1) {
+    return '\n' + chalk.bold.underline(text) + '\n\n';
+  } else {
+    return chalk.underline(text) + '\n\n';
   }
 },
 
@@ -99,11 +101,11 @@ renderer.listitem = function (text) {
 },
 
 renderer.paragraph = function (text) {
-  return text + ' ';
+  return text + '\n\n';
 },
 
 renderer.table = function (header, body) {
-  return header + '\n\n' + body;
+  return header + '\n\n' + body + '\n';
 },
 
 renderer.tablerow = function (content) {
@@ -135,7 +137,7 @@ renderer.codespan = function (code) {
 },
 
 renderer.br = function () {
-  return '\n';
+  return '';
 },
 
 renderer.del = function (text) {
