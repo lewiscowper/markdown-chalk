@@ -5,7 +5,7 @@ var marked = require('marked'),
     chalk = require('chalk'),
     argv = require('yargs')
     .usage('Usage: $0 --input [Markdown File] --lineLength [num]')
-    .default({'input': 'README.md', 'lineLength': 70})
+    .default({'input': 'README.md', 'lineLength': 80})
     .alias('i', 'input')
     .nargs('input', 1)
     .alias('l', 'lineLength')
@@ -15,69 +15,36 @@ var marked = require('marked'),
     .argv,
 
     renderer = new marked.Renderer();
-marked.setOptions({
-  gfm: true,
-  tables: true,
-  breaks: true,
-  pedantic: false,
-  sanitize: true,
-  smartLists: true,
-  smartypants: true
-});
-
-// From here http://jsfiddle.net/jahroy/Rwr7q/18/
-// Folds a string at a specified length, optionally attempting
-// to insert newlines after whitespace characters.
-//
-// Returns an array of strings that are no longer than lineLength
-// characters long.  If resultArray is specified as an array, the lines 
-// found in inputString will be pushed onto the end of resultArray. 
-//
-// If inputString is huge and n is very small, this method will have
-// problems... StackOverflow.
-//
-
-function fold(inputString, lineLength, useSpaces, resultArray) {
-  resultArray = resultArray || [];
-  if (inputString.length <= lineLength) {
-    resultArray.push(inputString);
-    return resultArray;
-  }
-  var line = inputString.substring(0, lineLength);
-  if (! useSpaces) { // insert newlines anywhere
-    resultArray.push(line);
-    return fold(inputString.substring(lineLength), lineLength, useSpaces, resultArray);
-  }
-  else { // attempt to insert newlines after whitespace
-    var lastSpaceRgx = /\s(?!.*\s)/;
-    var idx = line.search(lastSpaceRgx);
-    var nextIdx = lineLength;
-    if (idx > 0) {
-      line = line.substring(0, idx);
-      nextIdx = idx;
-    }
-    resultArray.push(line);
-    return fold(inputString.substring(nextIdx), lineLength, useSpaces, resultArray);
-  }
-}
+    marked.setOptions({
+      gfm: true,
+      tables: true,
+      breaks: true,
+      pedantic: false,
+      sanitize: true,
+      smartLists: true,
+      smartypants: true
+    }),
+    wrap = require('word-wrap');
 
 var inputFile = fs.readFileSync(argv.input, 'utf-8')
-
-var inputFileArray = fold(inputFile, argv.lineLength, true);
-var inputFileWithNewLines = inputFileArray.join('\n');
 
 // Block Level Methods
 
 renderer.code = function (code, language) {
-  return chalk.green(code) + '\n\n';
+  return chalk.bold('<--- code block: ' + language + '--->')
+    + '\n'
+    + chalk.green(code)
+    + '\n\n'
+    + chalk.bold('</--- code block --->')
+    + '\n\n';
 },
 
 renderer.blockquote = function (quote) {
-  return chalk.bgBlack(quote) + '\n';
+  return chalk.bgBlack(quote);
 },
 
 renderer.html = function (html) {
-  return html + '\n';
+  return html;
 },
 
 renderer.heading = function (text, level) {
@@ -89,7 +56,7 @@ renderer.heading = function (text, level) {
 },
 
 renderer.hr = function () {
-  return '\n\n';
+  return;
 },
 
 renderer.list = function (body, ordered) {
@@ -137,7 +104,7 @@ renderer.codespan = function (code) {
 },
 
 renderer.br = function () {
-  return '';
+  return '\n';
 },
 
 renderer.del = function (text) {
@@ -150,6 +117,8 @@ renderer.link = function (href, title, text) {
 
 renderer.image = function (href, title, text) {
   return text;
-},
+};
 
-console.log(marked (inputFileWithNewLines, {renderer: renderer}));
+var inputFileWrapped = wrap(inputFile, {width: argv.lineLength, indent: ''});
+
+console.log(marked (inputFileWrapped, {renderer: renderer}));

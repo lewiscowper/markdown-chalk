@@ -27,6 +27,7 @@
   "dependencies": {
     "chalk": "^1.1.1",
     "marked": "^0.3.5",
-    "yargs": "^3.25.0"
+    "yargs": "^3.25.0",
+    "word-wrap": "^1.1.0"
   }
 }
