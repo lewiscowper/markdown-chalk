@@ -56,7 +56,7 @@ renderer.heading = function (text, level) {
 },
 
 renderer.hr = function () {
-  return;
+  return chalk.underline(Array(argv.lineLength).join(' ')) + '\n\n\n';
 },
 
 renderer.list = function (body, ordered) {
