@@ -31,11 +31,7 @@ var inputFile = fs.readFileSync(argv.input, 'utf-8')
 // Block Level Methods
 
 renderer.code = function (code, language) {
-  return chalk.bold('<--- code block: ' + language + '--->')
-    + '\n'
-    + chalk.green(code)
-    + '\n\n'
-    + chalk.bold('</--- code block --->')
+  return chalk.inverse.green(code)
     + '\n\n';
 },
 
@@ -72,11 +68,11 @@ renderer.paragraph = function (text) {
 },
 
 renderer.table = function (header, body) {
-  return header + '\n\n' + body + '\n';
+  return '\n';
 },
 
 renderer.tablerow = function (content) {
-  return content;
+  return '';
 },
 
 renderer.tablecell = function (content, flags) {
@@ -86,7 +82,7 @@ renderer.tablecell = function (content, flags) {
   //   header: true || false,
   //   align: 'center' || 'left' || 'right'
   // }
-  return content;
+  return '';
 },
 
 // Inline Level Methods
@@ -116,7 +112,7 @@ renderer.link = function (href, title, text) {
 },
 
 renderer.image = function (href, title, text) {
-  return text;
+  return '';
 };
 
 var inputFileWrapped = wrap(inputFile, {width: argv.lineLength, indent: ''});
