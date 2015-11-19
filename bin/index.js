@@ -112,6 +112,16 @@ renderer.image = function () {
   return '';
 };
 
-var inputFileWrapped = wrap(inputFile, {width: argv.lineLength, indent: ''});
+var isExecuting = (require.main === module);
 
-console.log(marked (inputFileWrapped, {renderer: renderer}));
+if (isExecuting) {
+  var inputFile = fs.readFileSync(argv.input, 'utf-8');
+  var inputFileWrapped = wrap(inputFile, {width: argv.lineLength, indent: ''});
+  console.log(marked (inputFileWrapped, {renderer: renderer}));
+} else {
+  module.exports = function (input) {
+    var inputFile = fs.readFileSync(input, 'utf-8');
+    var inputFileWrapped = wrap(inputFile, {width: argv.lineLength, indent: ''});
+    return marked (inputFileWrapped, {renderer: renderer});
+  };
+}
