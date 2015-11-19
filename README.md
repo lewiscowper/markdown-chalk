@@ -1,6 +1,8 @@
 # Markdown-Chalk
 
-This is currently a really early version of a markdown parser that uses chalk to print a markdown file nicely in the terminal.
+A markdown parser that uses chalk to print a markdown file nicely in the terminal.
+
+# CLI usage
 
 ```
 Usage: markdown-chalk --input [Markdown File] --lineLength [num]
@@ -11,6 +13,14 @@ Options:
   -l, --lineLength                                                 [default: 70]
 ```
 
+# Require() usage
+
 ```javascript
-console.log('test');
+
+var markdownChalk = require('markdown-chalk');
+
+var result = markdownChalk('path/to/file.md');
+
+console.log(result);
+
 ```
