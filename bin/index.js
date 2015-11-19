@@ -101,7 +101,7 @@ renderer.br = function () {
 };
 
 renderer.del = function (text) {
-  return text;
+  return chalk.strikethrough(text);
 };
 
 renderer.link = function (text) {
