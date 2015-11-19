@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "exit 0"
+    "test:lint": "eslint bin/*.js test/*.js",
   },
   "bin": {
     "markdown-chalk": "bin/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lewiscowper/markdown-chalk.git"
+    "url": "https://github.com/lewiscowper/markdown-chalk.git"
   },
   "keywords": [
     "markdown",
@@ -29,5 +30,8 @@
     "marked": "^0.3.5",
     "yargs": "^3.25.0",
     "word-wrap": "^1.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^1.9.0",
   }
 }

@@ -1,47 +1,44 @@
 #! /usr/bin/env node
 
-var marked = require('marked'),
-    fs = require('fs'),
-    chalk = require('chalk'),
-    argv = require('yargs')
-    .usage('Usage: $0 --input [Markdown File] --lineLength [num]')
-    .default({'input': 'README.md', 'lineLength': 80})
-    .alias('i', 'input')
-    .nargs('input', 1)
-    .alias('l', 'lineLength')
-    .help('h')
-    .alias('h', 'help')
-    .demand(['input'])
-    .argv,
+var marked = require('marked');
+var fs = require('fs');
+var chalk = require('chalk');
+var argv = require('yargs')
+  .usage('Usage: $0 --input [Markdown File] --lineLength [num]')
+  .default({'input': 'README.md', 'lineLength': 80})
+  .alias('i', 'input')
+  .nargs('input', 1)
+  .alias('l', 'lineLength')
+  .help('h')
+  .alias('h', 'help')
+  .demand(['input'])
+  .argv;
 
-    renderer = new marked.Renderer();
-    marked.setOptions({
-      gfm: true,
-      tables: true,
-      breaks: true,
-      pedantic: false,
-      sanitize: true,
-      smartLists: true,
-      smartypants: true
-    }),
-    wrap = require('word-wrap');
-
-var inputFile = fs.readFileSync(argv.input, 'utf-8')
+var renderer = new marked.Renderer();
+marked.setOptions({
+  gfm: true,
+  tables: true,
+  breaks: true,
+  pedantic: false,
+  sanitize: true,
+  smartLists: true,
+  smartypants: true
+});
+var wrap = require('word-wrap');
 
 // Block Level Methods
 
-renderer.code = function (code, language) {
-  return chalk.inverse.green(code)
-    + '\n\n';
-},
+renderer.code = function (code) {
+  return chalk.inverse.green(code) + '\n\n';
+};
 
 renderer.blockquote = function (quote) {
   return chalk.bgBlack(quote);
-},
+};
 
 renderer.html = function (html) {
   return html;
-},
+};
 
 renderer.heading = function (text, level) {
   if (level == 1) {
@@ -49,33 +46,33 @@ renderer.heading = function (text, level) {
   } else {
     return chalk.underline(text) + '\n\n';
   }
-},
+};
 
 renderer.hr = function () {
   return chalk.underline(Array(argv.lineLength).join(' ')) + '\n\n\n';
-},
+};
 
-renderer.list = function (body, ordered) {
+renderer.list = function (body) {
   return body;
-},
+};
 
 renderer.listitem = function (text) {
   return text;
-},
+};
 
 renderer.paragraph = function (text) {
   return text + '\n\n';
-},
+};
 
-renderer.table = function (header, body) {
+renderer.table = function () {
   return '\n';
-},
+};
 
-renderer.tablerow = function (content) {
+renderer.tablerow = function () {
   return '';
-},
+};
 
-renderer.tablecell = function (content, flags) {
+renderer.tablecell = function () {
   // flags has the following properties:
   //
   // {
@@ -83,35 +80,35 @@ renderer.tablecell = function (content, flags) {
   //   align: 'center' || 'left' || 'right'
   // }
   return '';
-},
+};
 
 // Inline Level Methods
 
 renderer.strong = function (text) {
   return chalk.bold(text);
-},
+};
 
 renderer.em = function (text) {
   return text;
-},
+};
 
 renderer.codespan = function (code) {
   return chalk.inverse(code);
-},
+};
 
 renderer.br = function () {
   return '\n';
-},
+};
 
 renderer.del = function (text) {
   return text;
-},
+};
 
-renderer.link = function (href, title, text) {
+renderer.link = function (text) {
   return text;
-},
+};
 
-renderer.image = function (href, title, text) {
+renderer.image = function () {
   return '';
 };
 
