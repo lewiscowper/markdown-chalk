@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/lewiscowper/markdown-chalk#readme",
   "dependencies": {
-    "chalk": "^1.1.1",
+    "chalk": "^1.1.2",
     "marked": "^0.3.5",
     "yargs": "^4.2.0",
     "word-wrap": "^1.1.0"
