@@ -1,5 +1,7 @@
 # Markdown-Chalk
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/lewiscowper/markdown-chalk.svg)](https://greenkeeper.io/)
+
 A markdown parser that uses chalk to print a markdown file nicely in the terminal.
 
 # CLI usage

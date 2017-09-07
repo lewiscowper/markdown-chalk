@@ -27,14 +27,14 @@
   },
   "homepage": "https://github.com/lewiscowper/markdown-chalk#readme",
   "dependencies": {
-    "chalk": "^1.1.1",
+    "chalk": "^2.1.0",
     "marked": "^0.3.5",
-    "yargs": "^4.2.0",
+    "yargs": "^8.0.2",
     "word-wrap": "^1.1.0"
   },
   "devDependencies": {
-    "eslint": "^3.3.1",
+    "eslint": "^4.6.1",
     "tape": "^4.2.2",
-    "semantic-release": "^4.3.5"
+    "semantic-release": "^7.0.2"
   }
 }
