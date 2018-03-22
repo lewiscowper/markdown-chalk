@@ -3,15 +3,15 @@
 var marked = require('marked');
 var fs = require('fs');
 var chalk = require('chalk');
+var readline = require('readline');
 var argv = require('yargs')
   .usage('Usage: $0 --input [Markdown File] --lineLength [num]')
-  .default({'input': 'README.md', 'lineLength': 80})
+  .default({'lineLength': 80})
   .alias('i', 'input')
   .nargs('input', 1)
   .alias('l', 'lineLength')
   .help('h')
   .alias('h', 'help')
-  .demand(['input'])
   .argv;
 
 var renderer = new marked.Renderer();
@@ -24,12 +24,11 @@ marked.setOptions({
   smartLists: true,
   smartypants: true
 });
-var wrap = require('word-wrap');
 
 // Block Level Methods
 
 renderer.code = function (code) {
-  return chalk.inverse.green(code) + '\n\n';
+  return chalk.inverse.green(code) + '\n';
 };
 
 renderer.blockquote = function (quote) {
@@ -49,15 +48,15 @@ renderer.heading = function (text, level) {
 };
 
 renderer.hr = function () {
-  return chalk.underline(Array(argv.lineLength).join(' ')) + '\n\n\n';
+  return chalk.underline(Array(argv.lineLength).join(' ')) + '\n';
 };
 
 renderer.list = function (body) {
-  return body;
+  return body + '\n';
 };
 
 renderer.listitem = function (text) {
-  return text;
+  return '- ' + text + '\n';
 };
 
 renderer.paragraph = function (text) {
@@ -115,13 +114,23 @@ renderer.image = function () {
 var isExecuting = (require.main === module);
 
 if (isExecuting) {
-  var inputFile = fs.readFileSync(argv.input, 'utf-8');
-  var inputFileWrapped = wrap(inputFile, {width: argv.lineLength, indent: ''});
-  console.log(marked (inputFileWrapped, {renderer: renderer}));
+  var rl = readline.createInterface({
+    input: argv.input ? fs.createReadStream(argv.input) : process.stdin,
+    output: process.stdout,
+    terminal: false
+  });
+
+  var markdown = [];
+
+  rl.on('line', function (line) {
+    markdown.push(line);
+  });
+
+  rl.on('close', function () {
+    console.log(marked(markdown.join('\n'), { renderer: renderer }));
+  });
 } else {
   module.exports = function (input) {
-    var inputFile = fs.readFileSync(input, 'utf-8');
-    var inputFileWrapped = wrap(inputFile, {width: argv.lineLength, indent: ''});
-    return marked (inputFileWrapped, {renderer: renderer});
+    return marked (input, {renderer: renderer});
   };
 }

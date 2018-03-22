@@ -10,7 +10,7 @@ Usage: markdown-chalk --input [Markdown File] --lineLength [num]
 Options:
   -h, --help        Show help                                          [boolean]
   -i, --input                                  [required] [default: "README.md"]
-  -l, --lineLength                                                 [default: 70]
+  -l, --lineLength                                                 [default: 80]
 ```
 
 # Require() usage
@@ -19,7 +19,7 @@ Options:
 
 var markdownChalk = require('markdown-chalk');
 
-var result = markdownChalk('path/to/file.md');
+var result = markdownChalk('# Some Markdown string');
 
 console.log(result);
 
