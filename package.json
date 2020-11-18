@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "eslint": "^5.16.0",
-    "semantic-release": "^15.13.14",
+    "semantic-release": "^17.2.3",
     "tape": "^4.2.2"
   }
 }
